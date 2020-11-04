@@ -18,6 +18,14 @@ function Login({ history }) {
     if (user && user.token) history.push("/");
   }, [user, history]);
 
+  const rolseBasedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      history.push("/admin/dashboard");
+    } else {
+      history.push("/user/history");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -38,6 +46,7 @@ function Login({ history }) {
               _id: res.data._id,
             },
           });
+          rolseBasedRedirect(res);
         })
         .catch((err) => console.log(err));
 
@@ -68,6 +77,7 @@ function Login({ history }) {
                 _id: res.data._id,
               },
             });
+            rolseBasedRedirect(res);
           })
           .catch((err) => console.log(err));
         history.push("/");

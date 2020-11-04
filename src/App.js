@@ -12,6 +12,15 @@ import Register from "./pages/auth/Register";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
+import History from "./pages/user/History";
+import Password from "./pages/user/Password";
+import Wishlist from "./pages/user/Wishlist";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import CreateCategory from "./pages/admin/category/CreateCategory";
+import UpdateCategory from "./pages/admin/category/UpdateCategory";
+import SubCreate from "./pages/admin/sub/SubCreate";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,10 +60,31 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <UserRoute exact path="/user/history">
+          <History />
+        </UserRoute>
+        <UserRoute exact path="/user/password">
+          <Password />
+        </UserRoute>
+        <UserRoute exact path="/user/wishlist">
+          <Wishlist />
+        </UserRoute>
+        <AdminRoute exact path="/admin/dashboard">
+          <AdminDashboard />
+        </AdminRoute>
+        <AdminRoute exact path="/admin/category">
+          <CreateCategory />
+        </AdminRoute>
+        <AdminRoute exact path="/admin/category/:slug">
+          <UpdateCategory />
+        </AdminRoute>
+        <AdminRoute exact path="/admin/sub">
+          <SubCreate />
+        </AdminRoute>
       </Switch>
     </>
   );
 }
 
 export default App;
-// 3.12
+// 7.8
