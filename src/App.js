@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
+
 import { auth } from "./firebase";
 import { currentUser } from "./functions/auth";
 
@@ -21,6 +22,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import CreateCategory from "./pages/admin/category/CreateCategory";
 import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import SubCreate from "./pages/admin/sub/SubCreate";
+import SubUpdate from "./pages/admin/sub/SubUpdate";
+import ProductCreate from "./pages/admin/product/ProductCreate";
 
 function App() {
   const dispatch = useDispatch();
@@ -81,10 +84,16 @@ function App() {
         <AdminRoute exact path="/admin/sub">
           <SubCreate />
         </AdminRoute>
+        <AdminRoute exact path="/admin/sub/:slug">
+          <SubUpdate />
+        </AdminRoute>
+        <AdminRoute exact path="/admin/product">
+          <ProductCreate />
+        </AdminRoute>
       </Switch>
     </>
   );
 }
 
 export default App;
-// 7.8
+// 9.12
