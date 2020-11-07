@@ -24,6 +24,7 @@ import UpdateCategory from "./pages/admin/category/UpdateCategory";
 import SubCreate from "./pages/admin/sub/SubCreate";
 import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
+import AllProducts from "./pages/admin/product/AllProducts";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,10 +91,13 @@ function App() {
         <AdminRoute exact path="/admin/product">
           <ProductCreate />
         </AdminRoute>
+        <AdminRoute exact path="/admin/products">
+          <AllProducts />
+        </AdminRoute>
       </Switch>
     </>
   );
 }
 
 export default App;
-// 9.12
+// 10.4

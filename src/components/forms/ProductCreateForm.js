@@ -1,6 +1,17 @@
 import React from "react";
+import { Select } from "antd";
 
-function ProductCreateForm({ handleChange, handleSubmit, values }) {
+const { Option } = Select;
+
+function ProductCreateForm({
+  handleChange,
+  handleSubmit,
+  values,
+  handleCategoryChange,
+  subOptions,
+  showSubs,
+  setValues,
+}) {
   const {
     title,
     description,
@@ -8,7 +19,6 @@ function ProductCreateForm({ handleChange, handleSubmit, values }) {
     category,
     categories,
     subs,
-    images,
     shipping,
     quantity,
     color,
@@ -110,7 +120,7 @@ function ProductCreateForm({ handleChange, handleSubmit, values }) {
           name="category"
           value={category}
           className="form-control"
-          onChange={handleChange}
+          onChange={handleCategoryChange}
         >
           <option>Select Category</option>
           {categories.map((c) => (
@@ -120,6 +130,25 @@ function ProductCreateForm({ handleChange, handleSubmit, values }) {
           ))}
         </select>
       </div>
+      {showSubs && (
+        <div className="form-group">
+          <label>Subs Category</label>
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            value={subs}
+            onChange={(value) => setValues({ ...values, subs: value })}
+          >
+            {subOptions.length &&
+              subOptions.map((s) => (
+                <Option key={s._id} value={s._id}>
+                  {s.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
       <button className="btn btn-outline-info" type="submit">
         Save
       </button>
