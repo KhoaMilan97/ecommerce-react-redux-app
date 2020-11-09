@@ -102,7 +102,7 @@ function FileUpload({ values, setValues, setLoading, loading }) {
           ))}
       </div>
       <div className="row">
-        <label className="btn btn-primary">
+        <label className="btn btn-primary btn-raised">
           {loading ? "Loading..." : "Choose File"}
           <input
             type="file"
