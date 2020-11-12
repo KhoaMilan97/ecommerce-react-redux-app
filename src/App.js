@@ -26,6 +26,7 @@ import SubUpdate from "./pages/admin/sub/SubUpdate";
 import ProductCreate from "./pages/admin/product/ProductCreate";
 import AllProducts from "./pages/admin/product/AllProducts";
 import ProductUpdate from "./pages/admin/product/ProductUpdate";
+import Product from "./pages/Product";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,6 @@ function App() {
         const idTokenResult = await user.getIdTokenResult();
         currentUser(idTokenResult.token)
           .then((res) => {
-            console.log(res);
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {
@@ -65,6 +65,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <Route exact path="/product/:slug" component={Product} />
         <UserRoute exact path="/user/history">
           <History />
         </UserRoute>
@@ -104,4 +105,4 @@ function App() {
 }
 
 export default App;
-// 12.4
+// 13.7

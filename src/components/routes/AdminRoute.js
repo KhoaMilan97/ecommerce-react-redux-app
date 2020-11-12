@@ -13,7 +13,6 @@ function AdminRouter({ children, ...rest }) {
     if (user && user.token) {
       currentAdmin(user.token)
         .then((res) => {
-          console.log("ADMIN RESPONSE", res);
           setAdmin(true);
         })
         .catch((err) => {

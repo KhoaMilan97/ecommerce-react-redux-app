@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { updateOrCreateUser } from "../../functions/auth";
 
 function Login({ history }) {
@@ -13,16 +13,27 @@ function Login({ history }) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
+  let location = useLocation();
 
   useEffect(() => {
-    if (user && user.token) history.push("/");
+    const intended = history.location.state;
+    if (intended) {
+      return;
+    } else {
+      if (user && user.token) history.push("/");
+    }
   }, [user, history]);
 
   const rolseBasedRedirect = (res) => {
-    if (res.data.role === "admin") {
-      history.push("/admin/dashboard");
+    const intended = location.state;
+    if (intended) {
+      history.push(intended.from);
     } else {
-      history.push("/user/history");
+      if (res.data.role === "admin") {
+        history.push("/admin/dashboard");
+      } else {
+        history.push("/user/history");
+      }
     }
   };
 
@@ -35,7 +46,6 @@ function Login({ history }) {
       const idTokenResult = await user.getIdTokenResult();
       updateOrCreateUser(idTokenResult.token)
         .then((res) => {
-          console.log(res);
           dispatch({
             type: "LOGGED_IN_USER",
             payload: {
