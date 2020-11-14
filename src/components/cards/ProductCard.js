@@ -9,13 +9,13 @@ import { showAverage } from "../../functions/rating";
 const { Meta } = Card;
 
 function ProductCard({ product }) {
-  const { title, description, images, slug } = product;
+  const { title, description, images, slug, price } = product;
   return (
     <>
       {product && product.rating && product.rating.length > 0 ? (
         showAverage(product)
       ) : (
-        <div className="text-center pt-1 pb-3">No rating yet</div>
+        <div className="text-center pt-1 pb-3 text-primary">No rating yet</div>
       )}
       <Card
         cover={
@@ -39,7 +39,7 @@ function ProductCard({ product }) {
         ]}
       >
         <Meta
-          title={title}
+          title={`${title} - $${price}`}
           description={`${description && description.substr(0, 40)}...`}
         />
       </Card>

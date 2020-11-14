@@ -6,11 +6,13 @@ import {
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
+  ShopOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
+import Search from "../forms/Search";
 
 const { SubMenu, Item } = Menu;
 
@@ -18,6 +20,7 @@ function Header() {
   const [current, setCurrent] = useState("home");
   const dispatch = useDispatch();
   const history = useHistory();
+
   const { user } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
@@ -37,6 +40,9 @@ function Header() {
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
+      </Item>
+      <Item key="shop" icon={<ShopOutlined />}>
+        <Link to="/shop">Shop</Link>
       </Item>
       {user && (
         <SubMenu
@@ -71,6 +77,9 @@ function Header() {
           <Link to="/register">Register</Link>
         </Item>
       )}
+      <span className="float-right">
+        <Search />
+      </span>
     </Menu>
   );
 }
