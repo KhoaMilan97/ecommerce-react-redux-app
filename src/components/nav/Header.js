@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
@@ -7,6 +7,7 @@ import {
   UserAddOutlined,
   LogoutOutlined,
   ShopOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +22,7 @@ function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -43,6 +44,13 @@ function Header() {
       </Item>
       <Item key="shop" icon={<ShopOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+          <Badge count={cart.length} offset={[9, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
       {user && (
         <SubMenu

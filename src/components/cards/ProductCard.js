@@ -1,7 +1,9 @@
-import React from "react";
-import { Card } from "antd";
+import React, { useState } from "react";
+import { Card, Tooltip } from "antd";
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import _ from "lodash";
+import { useDispatch } from "react-redux";
 
 import laptop from "../../images/laptop.png";
 import { showAverage } from "../../functions/rating";
@@ -9,7 +11,47 @@ import { showAverage } from "../../functions/rating";
 const { Meta } = Card;
 
 function ProductCard({ product }) {
-  const { title, description, images, slug, price } = product;
+  const { title, description, images, slug, price, _id } = product;
+  const [tooltip, setTooltip] = useState("Click to add");
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    let cart = [];
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
+
+      const itemExisting = cart.find(
+        // find trả về giá trị đầu tiên tìm thấy
+        (product) => product._id === _id
+      );
+
+      if (itemExisting) {
+        return;
+      }
+
+      cart.push({
+        ...product,
+        count: 1,
+      });
+
+      const unique = _.uniqWith(cart, _.isEqual);
+      //console.log(unique);
+      localStorage.setItem("cart", JSON.stringify(unique));
+      setTooltip("Added");
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+    }
+  };
+
   return (
     <>
       {product && product.rating && product.rating.length > 0 ? (
@@ -31,11 +73,13 @@ function ProductCard({ product }) {
             <EyeOutlined className="text-primary" /> <br />
             View Product
           </Link>,
-          <>
-            <ShoppingCartOutlined className="text-success" />
-            <br />
-            Add to Cart
-          </>,
+          <Tooltip title={tooltip}>
+            <div onClick={handleAddToCart}>
+              <ShoppingCartOutlined className="text-success" />
+              <br />
+              Add to Cart
+            </div>
+          </Tooltip>,
         ]}
       >
         <Meta

@@ -30,6 +30,8 @@ import Product from "./pages/Product";
 import CategoryHome from "./pages/category/CategoryHome";
 import SubHome from "./pages/sub/SubHome";
 import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import SideDrawer from "./components/drawer/SideDrawer";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,6 +63,7 @@ function App() {
   return (
     <>
       <Header />
+      <SideDrawer />
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={Home} />
@@ -72,6 +75,7 @@ function App() {
         <Route exact path="/category/:slug" component={CategoryHome} />
         <Route exact path="/sub/:slug" component={SubHome} />
         <Route exact path="/shop" component={Shop} />
+        <Route exact path="/cart" component={Cart} />
 
         <UserRoute exact path="/user/history">
           <History />
@@ -82,6 +86,7 @@ function App() {
         <UserRoute exact path="/user/wishlist">
           <Wishlist />
         </UserRoute>
+
         <AdminRoute exact path="/admin/dashboard">
           <AdminDashboard />
         </AdminRoute>
@@ -112,4 +117,4 @@ function App() {
 }
 
 export default App;
-// 15.9
+// 16.13

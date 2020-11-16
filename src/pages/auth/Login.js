@@ -16,13 +16,14 @@ function Login({ history }) {
   let location = useLocation();
 
   useEffect(() => {
-    const intended = history.location.state;
+    const intended = location.state;
+    // console.log(intended);
     if (intended) {
       return;
     } else {
       if (user && user.token) history.push("/");
     }
-  }, [user, history]);
+  }, [user, location, history]);
 
   const rolseBasedRedirect = (res) => {
     const intended = location.state;
