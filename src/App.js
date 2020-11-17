@@ -32,6 +32,7 @@ import SubHome from "./pages/sub/SubHome";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import SideDrawer from "./components/drawer/SideDrawer";
+import CheckOut from "./pages/CheckOut";
 
 function App() {
   const dispatch = useDispatch();
@@ -86,6 +87,9 @@ function App() {
         <UserRoute exact path="/user/wishlist">
           <Wishlist />
         </UserRoute>
+        <UserRoute exact path="/checkout">
+          <CheckOut />
+        </UserRoute>
 
         <AdminRoute exact path="/admin/dashboard">
           <AdminDashboard />
@@ -117,4 +121,4 @@ function App() {
 }
 
 export default App;
-// 16.13
+// 17.1

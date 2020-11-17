@@ -1,10 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+
+import { userCart } from "../functions/user";
 
 function Cart() {
   const { cart, user } = useSelector((state) => ({ ...state }));
+  const history = useHistory();
 
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
@@ -13,7 +16,12 @@ function Cart() {
   };
 
   const saveOrderToDb = () => {
-    //
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log("CART RESPONSE RES", res);
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log(err));
   };
 
   const showCartItems = () => (
