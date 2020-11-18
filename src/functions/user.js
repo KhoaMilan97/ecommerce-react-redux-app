@@ -23,3 +23,10 @@ export const saveUserAddress = (address, authtoken) =>
     { address },
     { headers: { authtoken } }
   );
+
+export const applyCoupon = (coupon, authtoken) =>
+  axios.post(
+    `${process.env.REACT_APP_API}/user/cart/coupon`,
+    { coupon },
+    { headers: { authtoken } }
+  );

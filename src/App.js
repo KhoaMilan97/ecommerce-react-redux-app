@@ -33,6 +33,8 @@ import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import SideDrawer from "./components/drawer/SideDrawer";
 import CheckOut from "./pages/CheckOut";
+import CreateCoupon from "./pages/admin/coupon/CreateCoupon";
+import Payment from "./pages/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -90,6 +92,9 @@ function App() {
         <UserRoute exact path="/checkout">
           <CheckOut />
         </UserRoute>
+        <UserRoute exact path="/payment">
+          <Payment />
+        </UserRoute>
 
         <AdminRoute exact path="/admin/dashboard">
           <AdminDashboard />
@@ -115,10 +120,13 @@ function App() {
         <AdminRoute exact path="/admin/product/:slug">
           <ProductUpdate />
         </AdminRoute>
+        <AdminRoute exact path="/admin/coupon">
+          <CreateCoupon />
+        </AdminRoute>
       </Switch>
     </>
   );
 }
 
 export default App;
-// 17.1
+// 18.7
