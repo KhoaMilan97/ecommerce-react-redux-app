@@ -30,3 +30,15 @@ export const applyCoupon = (coupon, authtoken) =>
     { coupon },
     { headers: { authtoken } }
   );
+
+export const createOrder = (stripeResponse, authtoken) =>
+  axios.post(
+    `${process.env.REACT_APP_API}/user/order`,
+    { stripeResponse },
+    { headers: { authtoken } }
+  );
+
+export const getOrders = (authtoken) =>
+  axios.get(`${process.env.REACT_APP_API}/user/order`, {
+    headers: { authtoken },
+  });

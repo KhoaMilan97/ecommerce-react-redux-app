@@ -8,15 +8,22 @@ function CategoryList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCanceled = false;
     getCategories()
       .then((res) => {
-        setCategories(res.data);
-        setLoading(false);
+        if (!isCanceled) {
+          setCategories(res.data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
       });
+
+    return () => {
+      isCanceled = true;
+    };
   }, []);
 
   const showCategories = () =>

@@ -8,15 +8,21 @@ function SubList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isCanceled = false;
     getSubs()
       .then((res) => {
-        setSub(res.data);
-        setLoading(false);
+        if (!isCanceled) {
+          setSub(res.data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
       });
+    return () => {
+      isCanceled = true;
+    };
   }, []);
 
   const showSub = () =>

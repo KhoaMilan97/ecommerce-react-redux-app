@@ -98,12 +98,16 @@ function SingleProduct({ product, clickedRating, star }) {
 
         <Card
           actions={[
-            <Tooltip title={tooltip}>
-              <div onClick={handleAddToCart}>
+            <Tooltip title={product.quantity < 1 ? "Out of stock" : tooltip}>
+              <button
+                onClick={handleAddToCart}
+                style={{ border: "none", background: "transparent" }}
+                disabled={product.quantity < 1}
+              >
                 <ShoppingCartOutlined className="text-success" />
                 <br />
-                Add to Cart
-              </div>
+                {product.quantity < 1 ? "Out of stock" : "Add to Cart"}
+              </button>
             </Tooltip>,
             <Link to="/">
               <HeartOutlined className="text-info" /> <br />

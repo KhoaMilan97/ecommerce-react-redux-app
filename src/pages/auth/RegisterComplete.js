@@ -39,7 +39,6 @@ function RegisterComplete({ history }) {
         const idTokenResult = await user.getIdTokenResult();
         updateOrCreateUser(idTokenResult.token)
           .then((res) => {
-            console.log(res);
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {

@@ -6,6 +6,7 @@ import { Card } from "antd";
 import { DollarOutlined, CheckOutlined } from "@ant-design/icons";
 
 import { createPaymentIndent } from "../functions/stripe";
+import { createOrder, removeUserCart } from "../functions/user";
 import laptop from "../images/laptop.png";
 
 function StripeCheckout() {
@@ -75,7 +76,25 @@ function StripeCheckout() {
     } else {
       // here u get result after successful payment
       // create order and save in database to admin to process
-      // empty user cart from redux store and local storage
+      createOrder(payload, user.token).then((res) => {
+        if (res.data.ok) {
+          // remove cart from localstorage
+          if (typeof window !== "undefined") localStorage.removeItem("cart");
+          // remove cart from redux
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: [],
+          });
+          // reset coupon to false
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: false,
+          });
+          // remove cart from db
+          removeUserCart(user.token);
+        }
+      });
+
       setError(null);
       setProcessing(false);
       setSucceeded(true);

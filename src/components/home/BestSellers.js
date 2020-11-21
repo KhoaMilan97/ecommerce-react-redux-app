@@ -35,7 +35,15 @@ function BestSellers() {
   }, [page]);
 
   useEffect(() => {
-    getProductsCount().then((res) => setProductsCount(res.data));
+    let isCanceled = false;
+    getProductsCount().then((res) => {
+      if (!isCanceled) {
+        setProductsCount(res.data);
+      }
+    });
+    return () => {
+      isCanceled = true;
+    };
   }, []);
 
   return (

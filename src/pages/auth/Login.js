@@ -17,7 +17,6 @@ function Login({ history }) {
 
   useEffect(() => {
     const intended = location.state;
-    // console.log(intended);
     if (intended) {
       return;
     } else {
@@ -77,7 +76,6 @@ function Login({ history }) {
         const idTokenResult = await user.getIdTokenResult();
         updateOrCreateUser(idTokenResult.token)
           .then((res) => {
-            console.log(res);
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {

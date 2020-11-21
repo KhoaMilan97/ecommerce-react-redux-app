@@ -11,7 +11,7 @@ import { showAverage } from "../../functions/rating";
 const { Meta } = Card;
 
 function ProductCard({ product }) {
-  const { title, description, images, slug, price, _id } = product;
+  const { title, description, images, slug, price, _id, quantity } = product;
   const [tooltip, setTooltip] = useState("Click to add");
   const dispatch = useDispatch();
 
@@ -73,12 +73,16 @@ function ProductCard({ product }) {
             <EyeOutlined className="text-primary" /> <br />
             View Product
           </Link>,
-          <Tooltip title={tooltip}>
-            <div onClick={handleAddToCart}>
+          <Tooltip title={product.quantity < 1 ? "Out of stock" : tooltip}>
+            <button
+              onClick={handleAddToCart}
+              style={{ border: "none", background: "transparent" }}
+              disabled={quantity < 1}
+            >
               <ShoppingCartOutlined className="text-success" />
               <br />
-              Add to Cart
-            </div>
+              {quantity < 1 ? "Out of stock" : "Add to Cart"}
+            </button>
           </Tooltip>,
         ]}
       >
