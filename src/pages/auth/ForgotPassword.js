@@ -3,9 +3,16 @@ import { toast } from "react-toastify";
 import { auth } from "../../firebase";
 import { useSelector } from "react-redux";
 
-const linkPasswordRedirect =
-  process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT ||
-  "https://mern-ecommerce-react-redux.herokuapp.com/login";
+let linkPasswordRedirect;
+
+if (process.env.NODE_ENV === "development") {
+  linkPasswordRedirect = process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT;
+}
+
+if (process.env.NODE_ENV === "production") {
+  linkPasswordRedirect =
+    "https://mern-ecommerce-react-redux.herokuapp.com/login";
+}
 
 function ForgotPassword({ history }) {
   const [email, setEmail] = useState("");

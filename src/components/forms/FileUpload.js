@@ -1,12 +1,8 @@
 import React from "react";
 import Resizer from "react-image-file-resizer";
-import axios from "axios";
+import Axios from "../../api";
 import { useSelector } from "react-redux";
 import { Avatar, Badge } from "antd";
-
-const apiUrl =
-  process.env.REACT_APP_API ||
-  "https://mern-ecommerce-react-redux.herokuapp.com/api";
 
 function FileUpload({ values, setValues, setLoading, loading }) {
   const user = useSelector((state) => state.user);
@@ -24,16 +20,15 @@ function FileUpload({ values, setValues, setLoading, loading }) {
         100,
         0,
         (uri) => {
-          axios
-            .post(
-              `${apiUrl}/uploadimages`,
-              { image: uri },
-              {
-                headers: {
-                  authtoken: user ? user.token : "",
-                },
-              }
-            )
+          Axios.post(
+            `/uploadimages`,
+            { image: uri },
+            {
+              headers: {
+                authtoken: user ? user.token : "",
+              },
+            }
+          )
             .then((res) => {
               setLoading(false);
               console.log(res);
@@ -58,16 +53,15 @@ function FileUpload({ values, setValues, setLoading, loading }) {
   const removeUploadFile = (public_id) => {
     // console.log("Image is removed", public_id);
     setLoading(true);
-    axios
-      .post(
-        `${apiUrl}/removeimages`,
-        { public_id },
-        {
-          headers: {
-            authtoken: user ? user.token : "",
-          },
-        }
-      )
+    Axios.post(
+      `/removeimages`,
+      { public_id },
+      {
+        headers: {
+          authtoken: user ? user.token : "",
+        },
+      }
+    )
       .then((res) => {
         setLoading(false);
         const { images } = values;

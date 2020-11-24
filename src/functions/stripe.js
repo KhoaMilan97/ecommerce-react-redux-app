@@ -1,11 +1,8 @@
-import axios from "axios";
-const apiUrl =
-  process.env.REACT_APP_API ||
-  "https://mern-ecommerce-react-redux.herokuapp.com/api";
+import Axios from "../api";
 
 export const createPaymentIndent = (coupon, authtoken) =>
-  axios.post(
-    `${apiUrl}/create-payment-intent`,
+  Axios.post(
+    `/create-payment-intent`,
     { couponApplied: coupon },
     { headers: { authtoken } }
   );

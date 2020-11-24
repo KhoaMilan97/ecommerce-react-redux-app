@@ -1,19 +1,15 @@
-import axios from "axios";
-
-const apiUrl =
-  process.env.REACT_APP_API ||
-  "https://mern-ecommerce-react-redux.herokuapp.com/api";
+import Axios from "../api";
 
 export const getOrders = async (authtoken) =>
-  await axios.get(`${apiUrl}/orders`, {
+  await Axios.get(`/orders`, {
     headers: {
       authtoken,
     },
   });
 
 export const changeStatus = async (orderId, orderStatus, authtoken) =>
-  await axios.put(
-    `${apiUrl}/order-status`,
+  await Axios.put(
+    `/order-status`,
     { orderId, orderStatus },
     {
       headers: {

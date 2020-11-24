@@ -1,18 +1,15 @@
-import axios from "axios";
-const apiUrl =
-  process.env.REACT_APP_API ||
-  "https://mern-ecommerce-react-redux.herokuapp.com/api";
+import Axios from "../api";
 
 export const getSubs = async () => {
-  return await axios.get(`${apiUrl}/subs`);
+  return await Axios.get(`/subs`);
 };
 
 export const getSub = async (slug) => {
-  return await axios.get(`${apiUrl}/sub/${slug}`);
+  return await Axios.get(`/sub/${slug}`);
 };
 
 export const createSub = async (sub, authtoken) => {
-  return await axios.post(`${apiUrl}/sub`, sub, {
+  return await Axios.post(`/sub`, sub, {
     headers: {
       authtoken,
     },
@@ -20,7 +17,7 @@ export const createSub = async (sub, authtoken) => {
 };
 
 export const updateSub = async (slug, sub, authtoken) => {
-  return await axios.put(`${apiUrl}/sub/${slug}`, sub, {
+  return await Axios.put(`/sub/${slug}`, sub, {
     headers: {
       authtoken,
     },
@@ -28,7 +25,7 @@ export const updateSub = async (slug, sub, authtoken) => {
 };
 
 export const removeSub = async (slug, authtoken) => {
-  return await axios.delete(`${apiUrl}/sub/${slug}`, {
+  return await Axios.delete(`/sub/${slug}`, {
     headers: {
       authtoken,
     },
