@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "development") {
 
 if (process.env.NODE_ENV === "production") {
   linkRegisterRedirect =
-    "https://mern-ecommerce-react-redux.herokuapp.com/register/complete";
+    "https://quizzical-turing-882b5f.netlify.app/register/complete";
 }
 
 function Register({ history }) {

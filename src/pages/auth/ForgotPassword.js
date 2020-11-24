@@ -10,8 +10,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 if (process.env.NODE_ENV === "production") {
-  linkPasswordRedirect =
-    "https://mern-ecommerce-react-redux.herokuapp.com/login";
+  linkPasswordRedirect = "https://quizzical-turing-882b5f.netlify.app/login";
 }
 
 function ForgotPassword({ history }) {
