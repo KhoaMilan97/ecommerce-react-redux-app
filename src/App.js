@@ -1,43 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
+import { Spin } from "antd";
 
 import { auth } from "./firebase";
 import { currentUser } from "./functions/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import Header from "./components/nav/Header";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import RegisterComplete from "./pages/auth/RegisterComplete";
-import Home from "./pages/Home";
-import ForgotPassword from "./pages/auth/ForgotPassword";
-import UserRoute from "./components/routes/UserRoute";
-import AdminRoute from "./components/routes/AdminRoute";
-import History from "./pages/user/History";
-import Password from "./pages/user/Password";
-import Wishlist from "./pages/user/Wishlist";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import CreateCategory from "./pages/admin/category/CreateCategory";
-import UpdateCategory from "./pages/admin/category/UpdateCategory";
-import SubCreate from "./pages/admin/sub/SubCreate";
-import SubUpdate from "./pages/admin/sub/SubUpdate";
-import ProductCreate from "./pages/admin/product/ProductCreate";
-import AllProducts from "./pages/admin/product/AllProducts";
-import ProductUpdate from "./pages/admin/product/ProductUpdate";
-import Product from "./pages/Product";
-import CategoryHome from "./pages/category/CategoryHome";
-import SubHome from "./pages/sub/SubHome";
-import Shop from "./pages/Shop";
-import Cart from "./pages/Cart";
-import SideDrawer from "./components/drawer/SideDrawer";
-import CheckOut from "./pages/CheckOut";
-import CreateCoupon from "./pages/admin/coupon/CreateCoupon";
-import Payment from "./pages/Payment";
+const Header = React.lazy(() => import("./components/nav/Header"));
+const Login = React.lazy(() => import("./pages/auth/Login"));
+const Register = React.lazy(() => import("./pages/auth/Register"));
+const RegisterComplete = React.lazy(() =>
+  import("./pages/auth/RegisterComplete")
+);
+const Home = React.lazy(() => import("./pages/Home"));
+const ForgotPassword = React.lazy(() => import("./pages/auth/ForgotPassword"));
+const UserRoute = React.lazy(() => import("./components/routes/UserRoute"));
+const AdminRoute = React.lazy(() => import("./components/routes/AdminRoute"));
+const History = React.lazy(() => import("./pages/user/History"));
+const Password = React.lazy(() => import("./pages/user/Password"));
+const Wishlist = React.lazy(() => import("./pages/user/Wishlist"));
+const AdminDashboard = React.lazy(() => import("./pages/admin/AdminDashboard"));
+const CreateCategory = React.lazy(() =>
+  import("./pages/admin/category/CreateCategory")
+);
+const UpdateCategory = React.lazy(() =>
+  import("./pages/admin/category/UpdateCategory")
+);
+const SubCreate = React.lazy(() => import("./pages/admin/sub/SubCreate"));
+const SubUpdate = React.lazy(() => import("./pages/admin/sub/SubUpdate"));
+const ProductCreate = React.lazy(() =>
+  import("./pages/admin/product/ProductCreate")
+);
+const AllProducts = React.lazy(() =>
+  import("./pages/admin/product/AllProducts")
+);
+const ProductUpdate = React.lazy(() =>
+  import("./pages/admin/product/ProductUpdate")
+);
+const Product = React.lazy(() => import("./pages/Product"));
+const CategoryHome = React.lazy(() => import("./pages/category/CategoryHome"));
+const SubHome = React.lazy(() => import("./pages/sub/SubHome"));
+const Shop = React.lazy(() => import("./pages/Shop"));
+const Cart = React.lazy(() => import("./pages/Cart"));
+const SideDrawer = React.lazy(() => import("./components/drawer/SideDrawer"));
+const CheckOut = React.lazy(() => import("./pages/CheckOut"));
+const CreateCoupon = React.lazy(() =>
+  import("./pages/admin/coupon/CreateCoupon")
+);
+const Payment = React.lazy(() => import("./pages/Payment"));
 
 function App() {
   const dispatch = useDispatch();
+  const [pending, setPending] = useState(true);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -54,8 +72,14 @@ function App() {
                 _id: res.data._id,
               },
             });
+            setPending(false);
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {
+            setPending(false);
+            console.log(err);
+          });
+      } else {
+        setPending(false);
       }
     });
     return () => {
@@ -63,8 +87,22 @@ function App() {
     };
   }, [dispatch]);
 
+  if (pending) {
+    return (
+      <div className="example">
+        <Spin size="large" />
+      </div>
+    );
+  }
+
   return (
-    <>
+    <Suspense
+      fallback={
+        <div className="col text-center pt-5">
+          __MERN <LoadingOutlined /> ECOMMERCE__
+        </div>
+      }
+    >
       <Header />
       <SideDrawer />
       <ToastContainer />
@@ -124,7 +162,7 @@ function App() {
           <CreateCoupon />
         </AdminRoute>
       </Switch>
-    </>
+    </Suspense>
   );
 }
 

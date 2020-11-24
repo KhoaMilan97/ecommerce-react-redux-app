@@ -16,7 +16,6 @@ function History() {
   useEffect(() => {
     const loadOrders = () =>
       getOrders(user.token).then((res) => {
-        //console.log(res.data);
         setOrders(res.data);
       });
     loadOrders();
@@ -68,7 +67,7 @@ function History() {
   );
 
   const showEachOrders = () =>
-    orders.map((order) => (
+    orders.reverse().map((order) => (
       <div key={order._id} className="m-5 p-3 card">
         <ShowPaymentInfo order={order} />
         {showOrderInTable(order)}

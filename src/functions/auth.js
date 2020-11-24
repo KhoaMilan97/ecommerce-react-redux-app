@@ -1,8 +1,11 @@
 import axios from "axios";
+const apiUrl =
+  process.env.REACT_APP_API ||
+  "https://mern-ecommerce-react-redux.herokuapp.com/api";
 
 export const updateOrCreateUser = async (authtoken) => {
   return await axios.post(
-    `${process.env.REACT_APP_API}/create-or-update-user`,
+    `${apiUrl}/create-or-update-user`,
     {},
     {
       headers: {
@@ -14,7 +17,7 @@ export const updateOrCreateUser = async (authtoken) => {
 
 export const currentUser = async (authtoken) => {
   return await axios.post(
-    `${process.env.REACT_APP_API}/current-user`,
+    `${apiUrl}/current-user`,
     {},
     {
       headers: {
@@ -26,7 +29,7 @@ export const currentUser = async (authtoken) => {
 
 export const currentAdmin = async (authtoken) => {
   return await axios.post(
-    `${process.env.REACT_APP_API}/current-admin`,
+    `${apiUrl}/current-admin`,
     {},
     {
       headers: {

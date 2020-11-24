@@ -4,6 +4,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Avatar, Badge } from "antd";
 
+const apiUrl =
+  process.env.REACT_APP_API ||
+  "https://mern-ecommerce-react-redux.herokuapp.com/api";
+
 function FileUpload({ values, setValues, setLoading, loading }) {
   const user = useSelector((state) => state.user);
   const fileUploadAndResize = (e) => {
@@ -22,7 +26,7 @@ function FileUpload({ values, setValues, setLoading, loading }) {
         (uri) => {
           axios
             .post(
-              `${process.env.REACT_APP_API}/uploadimages`,
+              `${apiUrl}/uploadimages`,
               { image: uri },
               {
                 headers: {
@@ -56,7 +60,7 @@ function FileUpload({ values, setValues, setLoading, loading }) {
     setLoading(true);
     axios
       .post(
-        `${process.env.REACT_APP_API}/removeimages`,
+        `${apiUrl}/removeimages`,
         { public_id },
         {
           headers: {

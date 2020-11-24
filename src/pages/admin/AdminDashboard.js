@@ -12,7 +12,6 @@ function AdminDashboard() {
 
   const loadAllOrders = useCallback(() => {
     getOrders(user.token).then((res) => {
-      console.log(res.data);
       setOrders(res.data);
     });
   }, [user.token]);

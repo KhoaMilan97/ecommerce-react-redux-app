@@ -3,6 +3,10 @@ import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
+const linkRegisterRedirect =
+  process.env.REACT_APP_REGISTER_REDIRECT_URL ||
+  "https://mern-ecommerce-react-redux.herokuapp.com/register/complete";
+
 function Register({ history }) {
   const [email, setEmail] = useState("");
   const { user } = useSelector((state) => ({ ...state }));
@@ -15,7 +19,7 @@ function Register({ history }) {
     e.preventDefault();
 
     const config = {
-      url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+      url: linkRegisterRedirect,
       handleCodeInApp: true,
     };
 

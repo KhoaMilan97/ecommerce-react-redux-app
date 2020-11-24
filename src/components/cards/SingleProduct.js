@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Card, Tabs, Tooltip } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import StarRatings from "react-star-ratings";
 import _ from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import laptop from "../../images/laptop.png";
 import ProductListItem from "./ProductListItem";
 import RatingModel from "../modal/RatingModel";
 import { showAverage } from "../../functions/rating";
+import { addToWishList } from "../../functions/user";
 
 const { TabPane } = Tabs;
 
@@ -19,6 +21,8 @@ function SingleProduct({ product, clickedRating, star }) {
   const { title, images, description, _id } = product;
   const [tooltip, setTooltip] = useState("Click to add");
   const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
 
   const handleAddToCart = () => {
     let cart = [];
@@ -54,6 +58,13 @@ function SingleProduct({ product, clickedRating, star }) {
         payload: unique,
       });
     }
+  };
+
+  const handleAddToWishList = () => {
+    addToWishList(_id, user.token).then((res) => {
+      toast.success("Added to wishlist");
+      history.push("/user/wishlist");
+    });
   };
 
   return (
@@ -101,7 +112,11 @@ function SingleProduct({ product, clickedRating, star }) {
             <Tooltip title={product.quantity < 1 ? "Out of stock" : tooltip}>
               <button
                 onClick={handleAddToCart}
-                style={{ border: "none", background: "transparent" }}
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  cursor: "pointer",
+                }}
                 disabled={product.quantity < 1}
               >
                 <ShoppingCartOutlined className="text-success" />
@@ -109,10 +124,17 @@ function SingleProduct({ product, clickedRating, star }) {
                 {product.quantity < 1 ? "Out of stock" : "Add to Cart"}
               </button>
             </Tooltip>,
-            <Link to="/">
+            <button
+              style={{
+                border: "none",
+                background: "transparent",
+                cursor: "pointer",
+              }}
+              onClick={handleAddToWishList}
+            >
               <HeartOutlined className="text-info" /> <br />
               Add To Wish List
-            </Link>,
+            </button>,
             <RatingModel>
               <StarRatings
                 rating={star}

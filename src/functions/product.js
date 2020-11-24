@@ -1,7 +1,10 @@
 import axios from "axios";
+const apiUrl =
+  process.env.REACT_APP_API ||
+  "https://mern-ecommerce-react-redux.herokuapp.com/api";
 
 export const createProduct = async (product, authtoken) => {
-  return await axios.post(`${process.env.REACT_APP_API}/product`, product, {
+  return await axios.post(`${apiUrl}/product`, product, {
     headers: {
       authtoken,
     },
@@ -9,11 +12,11 @@ export const createProduct = async (product, authtoken) => {
 };
 
 export const getProductsByCount = async (count) => {
-  return await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
+  return await axios.get(`${apiUrl}/products/${count}`);
 };
 
 export const removeProduct = async (slug, authtoken) => {
-  return await axios.delete(`${process.env.REACT_APP_API}/product/${slug}`, {
+  return await axios.delete(`${apiUrl}/product/${slug}`, {
     headers: {
       authtoken,
     },
@@ -21,23 +24,19 @@ export const removeProduct = async (slug, authtoken) => {
 };
 
 export const getProduct = async (slug) => {
-  return await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
+  return await axios.get(`${apiUrl}/product/${slug}`);
 };
 
 export const updateProduct = async (slug, product, authtoken) => {
-  return await axios.put(
-    `${process.env.REACT_APP_API}/product/${slug}`,
-    product,
-    {
-      headers: {
-        authtoken,
-      },
-    }
-  );
+  return await axios.put(`${apiUrl}/product/${slug}`, product, {
+    headers: {
+      authtoken,
+    },
+  });
 };
 
 export const getProducts = async (sort, order, page) => {
-  return await axios.post(`${process.env.REACT_APP_API}/products`, {
+  return await axios.post(`${apiUrl}/products`, {
     sort,
     order,
     page,
@@ -45,12 +44,12 @@ export const getProducts = async (sort, order, page) => {
 };
 
 export const getProductsCount = async () => {
-  return await axios.get(`${process.env.REACT_APP_API}/products/total`);
+  return await axios.get(`${apiUrl}/products/total`);
 };
 
 export const productStar = async (productId, star, authtoken) => {
   return await axios.post(
-    `${process.env.REACT_APP_API}/product/star/${productId}`,
+    `${apiUrl}/product/star/${productId}`,
     { star },
     {
       headers: {
@@ -61,11 +60,9 @@ export const productStar = async (productId, star, authtoken) => {
 };
 
 export const getRelated = async (productId) => {
-  return await axios.get(
-    `${process.env.REACT_APP_API}/product/related/${productId}`
-  );
+  return await axios.get(`${apiUrl}/product/related/${productId}`);
 };
 
 export const fetchProductsByFilter = async (arg) => {
-  return await axios.post(`${process.env.REACT_APP_API}/search/filters`, arg);
+  return await axios.post(`${apiUrl}/search/filters`, arg);
 };

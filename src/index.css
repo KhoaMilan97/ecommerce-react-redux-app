@@ -6,3 +6,13 @@
 .pointer {
   cursor: pointer;
 }
+
+.example {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

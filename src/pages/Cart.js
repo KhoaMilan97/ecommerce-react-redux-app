@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 
@@ -8,6 +8,7 @@ import { userCart } from "../functions/user";
 function Cart() {
   const { cart, user } = useSelector((state) => ({ ...state }));
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const getTotal = () => {
     return cart.reduce((currentValue, nextValue) => {
@@ -16,6 +17,18 @@ function Cart() {
   };
 
   const saveOrderToDb = () => {
+    userCart(cart, user.token)
+      .then((res) => {
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const saveCashOrderToDb = () => {
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
     userCart(cart, user.token)
       .then((res) => {
         if (res.data.ok) history.push("/checkout");
@@ -73,13 +86,23 @@ function Cart() {
           </p>
           <hr />
           {user ? (
-            <button
-              disabled={!cart.length}
-              className="btn btn-sm btn-primary mt-2"
-              onClick={saveOrderToDb}
-            >
-              Proceed to Checkout
-            </button>
+            <>
+              <button
+                disabled={!cart.length}
+                className="btn btn-sm btn-primary mt-2"
+                onClick={saveOrderToDb}
+              >
+                Proceed to Checkout
+              </button>
+              <br />
+              <button
+                disabled={!cart.length}
+                className="btn btn-sm btn-danger mt-2"
+                onClick={saveCashOrderToDb}
+              >
+                Pay cash on delivery
+              </button>
+            </>
           ) : (
             <button className="btn btn-sm btn-primary mt-2">
               <Link

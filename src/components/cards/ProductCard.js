@@ -76,7 +76,11 @@ function ProductCard({ product }) {
           <Tooltip title={product.quantity < 1 ? "Out of stock" : tooltip}>
             <button
               onClick={handleAddToCart}
-              style={{ border: "none", background: "transparent" }}
+              style={{
+                border: "none",
+                background: "transparent",
+                cursor: "pointer",
+              }}
               disabled={quantity < 1}
             >
               <ShoppingCartOutlined className="text-success" />
